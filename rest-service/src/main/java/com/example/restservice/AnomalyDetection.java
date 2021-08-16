@@ -1,19 +1,18 @@
 package com.example.restservice;
 
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
 public class AnomalyDetection {
 
-    private final long id;
-    private final boolean fake;
-    public AnomalyDetection(long id, double [] values, double threshold) {
-        this.id = id;
-        this.fake = detectAnomaly(values, threshold);
-    }
-
-
-    public static boolean detectAnomaly(double[] numArray,double threshold){
+    public  OutlierResponse detectAnomaly(double[] numArray,double threshold){
         double sum = 0.0;
         double length = numArray.length;
-
+        Map<Integer,Double> outliers = new HashMap<>();
+        int index=0;
         for(double num : numArray){
             sum += num;
         }
@@ -28,22 +27,18 @@ public class AnomalyDetection {
         boolean result = false;
 
         for(double num: numArray) {
+            index++;
            double z = (num - mean) / std;
             if (z > threshold) {
                 result = true;
-                break;
+                outliers.put(index,num);
             }
         }
 
-        return result;
-    }
+        OutlierResponse response = new OutlierResponse();
+        response.setOutlier(result);
+        response.setOutlierPoints(outliers);
 
-    public long getId() {
-        return id;
+        return response;
     }
-
-    public boolean getFake() {
-        return fake;
-    }
-
 }
