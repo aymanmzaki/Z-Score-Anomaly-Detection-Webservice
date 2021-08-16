@@ -4,14 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OutlierResponse{
-    public int getInputSize() {
-        return inputSize;
-    }
-
-    public void setInputSize(int inputSize) {
-        this.inputSize = inputSize;
-    }
-
     private int inputSize;
     private boolean outlier;
     private Map<Integer,Double> outlierPoints;
@@ -33,5 +25,11 @@ public class OutlierResponse{
 
     public Map<Integer, Double> getOutlierPoints() {
         return outlierPoints;
+    }
+    public int getInputSize() {
+        return inputSize;
+    }
+    public void setInputSize(int inputSize) {
+        this.inputSize = inputSize;
     }
 }
